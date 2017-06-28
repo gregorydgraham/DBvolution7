@@ -1211,9 +1211,6 @@ public abstract class DBDefinition {
 	 * a sequence.
 	 *
 	 * @return "NEXTVAL"
-	 * @see NumberExpression#getNextSequenceValue(java.lang.String)
-	 * @see NumberExpression#getNextSequenceValue(java.lang.String,
-	 * java.lang.String)
 	 */
 	public String getNextSequenceValueFunctionName() {
 		return "NEXTVAL";
