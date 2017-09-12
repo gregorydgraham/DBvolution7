@@ -23,6 +23,7 @@ import nz.co.gregs.dbvolution.databases.PostgresDB;
 import nz.co.gregs.dbvolution.databases.PostgresDBOverSSL;
 import nz.co.gregs.dbvolution.datatypes.*;
 import nz.co.gregs.dbvolution.datatypes.spatial2D.*;
+import nz.co.gregs.dbvolution.datatypes.spatial3D.DBPoint3D;
 import nz.co.gregs.dbvolution.expressions.DBExpression;
 import nz.co.gregs.dbvolution.expressions.Line2DExpression;
 import nz.co.gregs.dbvolution.expressions.MultiPoint2DExpression;
@@ -93,8 +94,8 @@ public class PostgresDBDefinition extends DBDefinition {
 			return " PATH ";
 		} else if (qdt instanceof DBLineSegment2D) {
 			return " PATH ";
-		} else if (qdt instanceof DBMultiPoint2D) {
-			return " GEOMETRY ";
+		} else if (qdt instanceof DBPoint3D) {
+			return " POINT ";
 		} else {
 			return super.getDatabaseDataTypeOfQueryableDatatype(qdt);
 		}
@@ -871,4 +872,38 @@ public class PostgresDBDefinition extends DBDefinition {
 	}
 
 
+	@Override
+	public String transformCoordinatesIntoDatabasePoint3DFormat(String xValue, String yValue, String zValue) {
+		return "POINT (" + xValue + ", " + yValue + ", " + zValue + ")";
+	}
+
+	@Override
+	public String doPoint3DEqualsTransform(String firstPoint, String secondPoint) {
+		return "((" + firstPoint + ")~=( " + secondPoint + "))";
+	}
+
+	@Override
+	public String doPoint3DGetXTransform(String point3D) {
+		return "(" + point3D + ")[0]";
+	}
+
+	@Override
+	public String doPoint3DGetYTransform(String point3D) {
+		return "(" + point3D + ")[1]";
+	}
+
+	@Override
+	public String doPoint3DMeasurableDimensionsTransform(String point3D) {
+		return " 0 ";
+	}
+
+	@Override
+	public String doPoint3DGetBoundingBoxTransform(String point3D) {
+		return "POLYGON(BOX(" + point3D + "," + point3D + "))";
+	}
+
+	@Override
+	public String doPoint3DAsTextTransform(String point3DString) {
+		return "(" + point3DString + ")::VARCHAR";
+	}
 }

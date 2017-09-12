@@ -676,4 +676,44 @@ public class MySQLDBDefinition extends DBDefinition {
 	public String doFindIntegerInStringTransform(String toSQLString) {
 		return MigrationFunctions.FINDFIRSTINTEGER+"("+toSQLString+")";
 	}
+
+	@Override
+	public String transformCoordinatesIntoDatabasePoint3DFormat(String xValue, String yValue, String zValue) {
+		return "PointFromText('POINT (" + xValue + " " + yValue + " " + zValue + ")')";
+	}
+
+	@Override
+	public String doPoint3DEqualsTransform(String firstPoint, String secondPoint) {
+		return "Equals(" + firstPoint + ", " + secondPoint + ")";
+	}
+
+	@Override
+	public String doPoint3DGetXTransform(String point3D) {
+		return " X(" + point3D + ")";
+	}
+
+	@Override
+	public String doPoint3DGetYTransform(String point3D) {
+		return " Y(" + point3D + ")";
+	}
+
+	@Override
+	public String doPoint3DGetZTransform(String point3D) {
+		return " Z(" + point3D + ")";
+	}
+
+	@Override
+	public String doPoint3DMeasurableDimensionsTransform(String point3D) {
+		return doPolygon3DMeasurableDimensionsTransform(point3D);
+	}
+
+	@Override
+	public String doPoint3DGetBoundingBoxTransform(String point3D) {
+		return doPolygon3DGetBoundingBoxTransform(point3D);
+	}
+
+	@Override
+	public String doPoint3DAsTextTransform(String point3DString) {
+		return " AsText(" + point3DString + ")";
+	}
 }
