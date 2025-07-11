@@ -1,5 +1,5 @@
 # DBvolution7
-Development to the DBvolution project and no further development is planned here. If you require support please contact me directly.
+## Development has moved to the DBvolution project and no further work is planned here. If you require support please contact me directly.
 
 DBvolution7 is a java library that reduces SQL access to simple java calls optimized for Java7.
 
